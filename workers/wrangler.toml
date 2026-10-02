@@ -1,0 +1,28 @@
+# =============================================================
+# @file 「一起过新年」Cloudflare Worker（Wrangler）配置
+# @description Worker 名称 guonian，入口 src/worker.js；
+#              开启 nodejs_compat 以使用 node:crypto。
+#              绑定资源：env.DB（D1 数据库 guonian-db）、
+#              env.ASSETS（Vite 构建产物目录 ../dist）；
+#              env.TOKEN_SECRET 为敏感密钥，须通过 wrangler secret 注入，不在此文件配置。
+# =============================================================
+
+name = "guonian"
+main = "src/worker.js"
+compatibility_date = "2025-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+# 生产环境自定义域名
+routes = [{ pattern = "cjbx.dkw.ccwu.cc", custom_domain = true }]
+
+# 静态资源绑定：目录指向 Vite 构建输出 ../dist，资源未命中时按 SPA 回退 index.html
+[assets]
+directory = "../dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# D1 数据库绑定，Worker 中通过 env.DB 访问（建表脚本见 schema.sql）
+[[d1_databases]]
+binding = "DB"
+database_name = "guonian-db"
+database_id = "d2c271c5-6511-4d49-8736-31c336aed3ca"

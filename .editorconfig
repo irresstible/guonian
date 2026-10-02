@@ -1,0 +1,18 @@
+# EditorConfig: 统一不同编辑器/IDE 的基础格式 https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Markdown 允许行尾两个空格作为换行标记
+[*.md]
+trim_trailing_whitespace = false
+
+# Windows 脚本保留 CRLF
+[*.{cmd,bat,ps1}]
+end_of_line = crlf

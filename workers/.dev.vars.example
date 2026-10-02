@@ -1,0 +1,7 @@
+# Cloudflare Worker 本地开发（wrangler dev）环境变量示例
+# 用法：复制本文件为 .dev.vars 并填入真实值；.dev.vars 已被 git 忽略，不会提交
+# 线上环境请用： npx wrangler secret put TOKEN_SECRET
+
+# HMAC 登录 Token 的签名密钥（本地演示随意填，线上务必使用随机长字符串，例如：
+#   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))" ）
+TOKEN_SECRET=replace-with-a-random-secret

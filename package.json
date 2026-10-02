@@ -1,0 +1,34 @@
+{
+  "name": "guonian",
+  "version": "1.0.0",
+  "private": true,
+  "description": "「一起过新年」主题社区单页应用：Vue 3 前端 + Express/Cloudflare Workers 双后端",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:server": "node server/index.js",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "server": "node server/index.js",
+    "deploy": "npm run build && npm --prefix workers run deploy"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "pinia": "^4.0.3",
+    "vue": "^3.5.42",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.8",
+    "eslint": "^10.11.0",
+    "eslint-plugin-vue": "^10.11.1",
+    "vite": "^8.2.2",
+    "vite-plugin-vue-devtools": "^8.2.1",
+    "vitest": "^5.0.3"
+  },
+  "engines": {
+    "node": "^22.18.0 || >=24.12.0"
+  }
+}

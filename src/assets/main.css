@@ -1,0 +1,388 @@
+/* ==========================================================
+   main.css：全局样式入口（基础重置 + 设计令牌 + 通用组件 + 表单页）
+   分区目录：
+   1. 基础重置：盒模型、列表与链接的默认外观去除
+   2. 设计令牌（:root）：新年品牌色、文字层级、面板/边框、圆角阴影、动效曲线、字体栈
+   3. 布局容器与页面基底：wrapper 版心、body 深色背景、键盘焦点、通用面板等
+   4. 无障碍：文本选中色与尊重系统“减少动态效果”偏好
+   5. 表单页公共样式（登录 / 注册 / 重置密码）：背景、卡片、输入框、按钮与移动端适配
+   ========================================================== */
+
+/* ====== 基础重置 ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ====== 设计令牌 ====== */
+:root {
+  /* 品牌主色（新年橙红） */
+  --brand-1: #c45620;
+  --brand-2: #e8834a;
+  --brand-soft: #f3b389;
+  --brand-gradient: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+  /* 辅助点缀色（青色，仅少量使用） */
+  --accent: #03e9f4;
+
+  /* 文字 */
+  --text: #ffffff;
+  --text-2: rgba(255, 255, 255, 0.62);
+  --text-3: rgba(255, 255, 255, 0.38);
+
+  /* 面板 / 边框 */
+  --panel: rgba(0, 0, 0, 0.42);
+  --panel-strong: rgba(20, 14, 12, 0.55);
+  --border: rgba(255, 255, 255, 0.12);
+
+  /* 圆角 / 阴影 / 动效 */
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 18px;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  --shadow-brand: 0 8px 22px rgba(196, 86, 32, 0.35);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ====== 布局容器与页面基底 ====== */
+.wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-stack);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background: #1a1210;
+}
+
+/* ====== 统一键盘焦点样式（无障碍） ====== */
+:focus-visible {
+  outline: 2px solid var(--brand-2);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ====== 通用面板：新页面内容块，供 PageShell 白名单命中 ====== */
+.shell-card {
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+/* ====== 新年头像框：品牌色双层边框加辉光 ====== */
+.avatar-frame {
+  border: 2px solid var(--brand-2) !important;
+  box-shadow:
+    0 0 0 3px rgba(196, 86, 32, 0.35),
+    0 0 12px rgba(232, 131, 74, 0.5) !important;
+}
+
+/* ====== 文本选中色 ====== */
+::selection {
+  background: rgba(196, 86, 32, 0.55);
+  color: #fff;
+}
+
+/* ====== 尊重系统“减少动态效果”设置 ====== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ====== 表单页公共样式（登录 / 注册 / 重置密码） ====== */
+
+/* 表单页根元素：整页居中；背景图由 AdaptiveBg 组件负责（竖屏模糊填充/桌面 cover） */
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  /* 100dvh 兜底移动端浏览器地址栏动态遮挡 */
+  min-height: 100dvh;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* 表单卡片置于背景组件（z-index:0）之上 */
+.login-box {
+  position: relative;
+  z-index: 1;
+  width: min(420px, 100%);
+  padding: 40px;
+  background: var(--panel-strong);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-sizing: border-box;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  animation: cardIn 0.5s var(--ease);
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.login-box h2 {
+  margin: 0 0 30px;
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+/* ====== 输入框 ====== */
+.user-box {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  outline: none;
+  background: transparent;
+  transition: border-color 0.3s;
+}
+
+.user-box input:focus {
+  border-bottom: 1px solid var(--brand-2);
+}
+
+.user-box label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.75);
+  pointer-events: none;
+  transition: all 0.3s var(--ease);
+}
+
+.user-box input:focus ~ label,
+.user-box input:not(:placeholder-shown) ~ label,
+.user-box input.has-value ~ label {
+  top: -18px;
+  left: 0;
+  color: var(--brand-2);
+  font-size: 13px;
+}
+
+/* ====== 显示/隐藏密码按钮 ====== */
+.toggle-pwd {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.25s;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-pwd:hover {
+  color: var(--brand-2);
+}
+
+/* ====== 手机号 + 验证码行 ====== */
+.phone-box {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.phone-input {
+  flex: 1;
+  position: relative;
+}
+
+.code-btn {
+  color: var(--brand-soft);
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 8px 14px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  border: 1px solid rgba(196, 86, 32, 0.55);
+  border-radius: 999px;
+  background: rgba(196, 86, 32, 0.12);
+  user-select: none;
+  transition: all 0.25s;
+}
+
+.code-btn:hover {
+  color: #fff;
+  background: var(--brand-1);
+  border-color: var(--brand-1);
+}
+
+.code-btn.is-counting {
+  color: #888;
+  pointer-events: none;
+}
+
+/* ====== 主行动按钮（登录 / 注册 / 重置） ====== */
+.register-btn-wrap,
+.login-btn-wrap {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.register-btn,
+.login-btn {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 20px;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 3px;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  background: var(--brand-gradient);
+  box-shadow: var(--shadow-brand);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), opacity 0.25s;
+  cursor: pointer;
+  border: none;
+}
+
+.register-btn:hover,
+.login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(196, 86, 32, 0.45);
+}
+
+.register-btn:active,
+.login-btn:active {
+  transform: translateY(0);
+}
+
+.register-btn.is-loading,
+.login-btn.is-loading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ====== 底部链接 ====== */
+.back-login,
+.back-register {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.back-login a,
+.back-register a {
+  color: var(--brand-soft);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.back-login a:hover,
+.back-register a:hover {
+  color: var(--brand-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ====== 登录页：记住密码 + 忘记密码 ====== */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.remember-label {
+  color: var(--text-2);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+
+.remember-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--brand-1);
+  cursor: pointer;
+}
+
+.forget-link {
+  color: var(--brand-soft);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.forget-link:hover {
+  color: var(--brand-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ====== 移动端小屏细节 ====== */
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 16px;
+  }
+  .login-box {
+    padding: 32px 24px;
+  }
+  .login-box h2 {
+    font-size: 26px;
+  }
+}

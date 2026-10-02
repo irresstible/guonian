@@ -1,0 +1,50 @@
+# ====== 依赖与构建产物 ======
+node_modules/
+dist/
+dist-ssr/
+coverage/
+*.tsbuildinfo
+
+# ====== 日志 ======
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ====== 本地密钥与环境变量（严禁提交） ======
+# Cloudflare Wrangler 本地密钥
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+workers/.dev.vars
+workers/.dev.vars.*
+!workers/.dev.vars.example
+# 通用 env
+.env
+.env.*
+!.env.example
+
+# ====== Wrangler / Cloudflare 本地缓存 ======
+.wrangler/
+workers/.wrangler/
+
+# ====== 后端本地数据（JSON 文件持久化，含用户数据） ======
+server/data/
+
+# ====== 编辑器与系统文件 ======
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# ====== 工具缓存 ======
+.eslintcache
+__screenshots__/
+*.timestamp-*-*.mjs
