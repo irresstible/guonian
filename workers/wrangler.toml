@@ -12,8 +12,15 @@ main = "src/worker.js"
 compatibility_date = "2025-10-01"
 compatibility_flags = ["nodejs_compat"]
 
-# 生产环境自定义域名
-routes = [{ pattern = "cjbx.dkw.ccwu.cc", custom_domain = true }]
+# 生产环境域名：
+# 1) cjbx.dkw.ccwu.cc —— Worker 自定义域名（橙色云，Cloudflare 默认 Anycast IP）
+# 2) m.cjbx.dkw.ccwu.cc —— 普通路由（custom_domain=false），DNS 为仅解析的灰记录、
+#    指向国内连通性更好的 Cloudflare Anycast 段（104.16-19 / 188.114.96 等"优选 IP"），
+#    供默认 IP 被地区性阻断（如天津运营商 RST）时的备用入口
+routes = [
+  { pattern = "cjbx.dkw.ccwu.cc", custom_domain = true },
+  { pattern = "m.cjbx.dkw.ccwu.cc", custom_domain = false },
+]
 
 # 静态资源绑定：目录指向 Vite 构建输出 ../dist，资源未命中时按 SPA 回退 index.html
 [assets]
